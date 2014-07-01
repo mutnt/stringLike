@@ -16,7 +16,7 @@ var b = StringLike('a string') //you can skip the 'new'
 ### Methods
 
 
-#### lineBreaksToHTML
+#### lineBreaksToHTML()
 
 converts single line returns to <BR>s and more line returns to paragraphs
 
@@ -33,10 +33,14 @@ converts single line returns to <BR>s and more line returns to paragraphs
 
 ### Functions
 
-#### StringLike.convert
+#### StringLike.convert(object,[limit],[recurse])
 
 converts all strings inside an object to instances of StringLike.
 Useful to convert a full "locals" object that you want to pass to your templates
+The function does not handle cyclic references unless you pass an array to 'recurse'
+
+* "limit" defaults to 10 nested objects, set it to -1 for infinite.
+* "recurse" if an array is passed (or true), the function will handle recursion
 
 ```js
 	var obj = {

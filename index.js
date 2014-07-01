@@ -40,18 +40,28 @@ p.template = function(values, opening, closing) {
 
 }
 
-var convertStringsInObject = function(obj){
-	var prop;
-	for(var n in obj){
+var convertStringsInObject = function(obj,limit,store){
+	var prop,i,n,l;
+	if(store){
+		if(store===true){store=[];}
+		l = store.length;
+		for(i=0;i<l;i++) {
+			if (store[i] === obj){return;}
+		}
+		store.push(obj);
+	}
+	limit = limit || 10;
+	if(limit==0){return;}
+	for(n in obj){
+		if(n=='s' || !obj.hasOwnProperty(n)){continue;}
 		prop = obj[n];
 		if (typeof prop === 'string'){
 			obj[n] = new StringLike(prop);
 		}
 		else if(is.object(prop)){
-			convertStringsInObject(prop);
+			convertStringsInObject(prop,limit-1,store);
 		}
 	}
-	return obj;
 }
 
 for(var n in S){StringLike[n] = S[n];}

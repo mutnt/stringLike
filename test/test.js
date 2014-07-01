@@ -674,17 +674,72 @@ describe('StringLike', function() {
     })
   })
 
-  describe('- convert',function(){
-    it('should convert all strings inside an object to StringLike instances',function(){
+  describe('+ convert(object,[limit],[recurse])',function(){
+    var makeObj = function(addCyclicObjects){
+      var cycled = addCyclicObjects ? makeObj() : 'cyclic'
       var obj = {
         someProp:{
           someInsideProp:'a string'
+        , cyclic: cycled
         }
+      , cyclic: cycled
       , someOtherProp:'a'
-      }
+      , prop1:{
+          prop2:{
+            cyclic: cycled
+          , prop3:{
+              prop4:{
+                prop5:{
+                  prop6:{
+                    prop7:{
+                      prop8:{
+                        prop9:{
+                          prop10:{
+                            prop11:{
+                              something:'something'
+                            , prop12:{
+                                prop13:'prop13'
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      };
+      if(addCyclicObjects){obj.myself = obj;}
+      return obj;
+    }
+    it('should convert all strings inside an object to StringLike instances',function(){
+      var obj = makeObj();
       S.convert(obj);
       T(obj.someProp.someInsideProp.s === 'a string')
       T(obj.someOtherProp.repeat(3).s === 'aaa')
+    })
+    it('should handle cyclic references if [recurse] is passed',function(){
+      var obj = makeObj(true);
+      S.convert(obj,null,true);
+      T(obj.someProp.cyclic.someOtherProp.s === 'a');
+    })
+    it('should handle no more than 10 recursions by default',function(){
+      var obj = makeObj();
+      S.convert(obj);
+      F(obj.prop1.prop2.prop3.prop4.prop5.prop6.prop7.prop8.prop9.prop10.prop11.prop12.prop13 === 'prop13')
+    })
+    it('should handle as many recursions as specified by [limit]',function(){
+      var obj = makeObj();
+      S.convert(obj,11);
+      T(obj.prop1.prop2.prop3.prop4.prop5.prop6.prop7.prop8.prop9.prop10.prop11.something.s === 'something')
+    })
+    it('should not stop recursing if a negative number is passed to [limit]',function(){
+      var obj = makeObj();
+      S.convert(obj,-1);
+      T(obj.prop1.prop2.prop3.prop4.prop5.prop6.prop7.prop8.prop9.prop10.prop11.prop12.prop13.s === 'prop13')
     })
   })
 
