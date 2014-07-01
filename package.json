@@ -1,0 +1,32 @@
+{
+  "name": "stringlike",
+  "version": "0.0.1",
+  "description": "A string like object to use in templates",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "dis": "^0.2.4",
+    "string": "^1.9.0",
+    "should": "^4.0.4"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mutnt/stringLike.git"
+  },
+  "keywords": [
+    "string",
+    "template"
+  ],
+  "author": "xananax@mutnt.net",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mutnt/stringLike/issues"
+  },
+  "homepage": "https://github.com/mutnt/stringLike"
+}
