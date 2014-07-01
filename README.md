@@ -12,6 +12,7 @@ var StringLike = require('stringlike');
 var a = new StringLike('a string')
 //or
 var b = StringLike('a string') //you can skip the 'new'
+```
 
 ### Methods
 
