@@ -29,7 +29,7 @@ p.linebreaksToHTML = function(tag,brTag){
 		.replace(/\n/g,'<'+brTag+'>')
 	;
 	var html = '<'+tag+'>'+s+'</'+tag+'>';
-	return new this.constructor(html)
+	return new this.constructor(html);
 }
 
 p.template = function(values, opening, closing) {
@@ -37,7 +37,19 @@ p.template = function(values, opening, closing) {
 	closing = closing || StringLike.TMPL_CLOSE
 	
 	return dummy.template.call(this,values,opening,closing)
+}
 
+p.safe = function(prefix){
+	if (this.s === null || this.s === undefined){return new this.constructor('')}
+	var s = (prefix||'')+ this.s
+		.toLowerCase()
+		.replace(/\s+/g,' ')
+		.replace(/\s/g,'_')
+		.replace(/&/g,'and')
+		.replace(/[^a-z0-9_-]/g,'')
+		.replace(/_+/g,'_')
+	;
+	return new this.constructor(s);
 }
 
 var convertStringsInObject = function(obj,limit,store){

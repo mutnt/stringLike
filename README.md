@@ -32,6 +32,11 @@ converts single line returns to <BR>s and more line returns to paragraphs
 	console.log(str.linebreaksToHTML().s == converted_text);
 ```
 
+#### safe([prefix])
+
+converts strings to class names that are safe to use in html elements
+if "prefix" is passed, it will be pre-pended to the string
+
 ### Functions
 
 #### StringLike.convert(object,[limit],[recurse])

@@ -743,6 +743,12 @@ describe('StringLike', function() {
     })
   })
 
+  describe('- safe()',function(){
+    it('should convert a non-safe string to a safe string',function(){
+      EQ (S('a LonG $* & weird () Sentence').safe().s, 'a_long_and_weird_sentence');
+    })
+  })
+
   it('should import native JavaScript string methods', function() {
     T (S('hi    ').substr(0,1).trimRight().startsWith('h'));
     T (S('hello ').concat('jp').indexOf('jp') === 6);
