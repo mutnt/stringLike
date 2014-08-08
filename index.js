@@ -78,5 +78,5 @@ var convertStringsInObject = function(obj,limit,store){
 
 for(var n in S){StringLike[n] = S[n];}
 StringLike.convert = convertStringsInObject;
-StringLike.VERSION = '0.0.2';
+StringLike.VERSION = '0.0.4';
 module.exports = StringLike;
