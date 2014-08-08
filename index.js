@@ -17,7 +17,7 @@ StringLike.prototype.constructor = StringLike;
 var p = StringLike.prototype;
 
 p.linebreaksToHTML = function(tag,brTag){
-	if (this.s === null || this.s === undefined){return new this.constructor('')}
+	if (this.s === null || this.s === undefined){return new this.constructor('');}
 	tag = tag || 'p';
 	brTag = brTag || 'br';
 	var s = this.s
@@ -30,17 +30,17 @@ p.linebreaksToHTML = function(tag,brTag){
 	;
 	var html = '<'+tag+'>'+s+'</'+tag+'>';
 	return new this.constructor(html);
-}
+};
 
 p.template = function(values, opening, closing) {
-	opening = opening || StringLike.TMPL_OPEN
-	closing = closing || StringLike.TMPL_CLOSE
+	opening = opening || StringLike.TMPL_OPEN;
+	closing = closing || StringLike.TMPL_CLOSE;
 	
-	return dummy.template.call(this,values,opening,closing)
-}
+	return dummy.template.call(this,values,opening,closing);
+};
 
 p.safe = function(prefix){
-	if (this.s === null || this.s === undefined){return new this.constructor('')}
+	if (this.s === null || this.s === undefined){return new this.constructor('');}
 	var s = (prefix||'')+ this.s
 		.toLowerCase()
 		.replace(/\s+/g,' ')
@@ -50,7 +50,7 @@ p.safe = function(prefix){
 		.replace(/_+/g,'_')
 	;
 	return new this.constructor(s);
-}
+};
 
 var convertStringsInObject = function(obj,limit,store){
 	var prop,i,n,l;
@@ -63,9 +63,9 @@ var convertStringsInObject = function(obj,limit,store){
 		store.push(obj);
 	}
 	limit = limit || 10;
-	if(limit==0){return;}
+	if(limit===0){return;}
 	for(n in obj){
-		if(n=='s' || !obj.hasOwnProperty(n)){continue;}
+		if(obj.hasOwnProperty('s') || n=='s' || !obj.hasOwnProperty(n)){continue;}
 		prop = obj[n];
 		if (typeof prop === 'string'){
 			obj[n] = new StringLike(prop);
@@ -74,9 +74,9 @@ var convertStringsInObject = function(obj,limit,store){
 			convertStringsInObject(prop,limit-1,store);
 		}
 	}
-}
+};
 
 for(var n in S){StringLike[n] = S[n];}
 StringLike.convert = convertStringsInObject;
-StringLike.VERSION = '0.0.1'
+StringLike.VERSION = '0.0.2';
 module.exports = StringLike;
